@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SQLite</string>
+    <string name="product_recycler">Product Recycler</string>
+    <string name="back_to_selection_activity">Back to Selection Activity</string>
+    <string name="floating_button_add">Floating Button Add</string>
+    <string name="product_category_prompt">Product Category Prompt</string>
+    <string name="text_product_by_category">Product by Category</string>
+    <string name="text_all_products">All Products</string>
+    <string name="text_welcome_page">Welcome</string>
+    <string name="all_products">All Products</string>
+    <string name="product_category">Product Category</string>
+    <string name="floating_btn_add">Add Floating Button</string>
+    <string name="product_picture">Product Picture</string>
+    <string name="button_visualize_full_list">Visualize Full List</string>
+    <string name="text_products_by_category">Products by Category</string>
+    <string name="button_visualize_by_category">Visualize by Category</string>
+    <string name="add_new_product">Add New Product</string>
+</resources>
