@@ -7,37 +7,39 @@ import androidx.annotation.NonNull;
 
 public class Product implements Parcelable {
 
-    private String category;
     private String name;
     private String description;
     private String seller;
     private float price;
+    private int picture;
 
-    public Product(String category, String name, String description, String seller, float price) {
-        this.category = category;
+    public Product(String name, String description, String seller, float price, int picture) {
+
         this.name = name;
         this.description = description;
         this.seller = seller;
         this.price = price;
+        this.picture = picture;
     }
 
     protected Product(Parcel in) {
-        category = in.readString();
+
         name = in.readString();
         description = in.readString();
         seller = in.readString();
         price = in.readFloat();
+        picture = in.readInt();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
         @Override
-        public Product createFromParcel(Parcel source) {
-            return new Product(source);
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
         }
 
         @Override
         public Product[] newArray(int size) {
-            return new Product[0];
+            return new Product[size];
         }
     };
 
@@ -48,18 +50,10 @@ public class Product implements Parcelable {
     }
 
     // Getter and Setters.
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -67,7 +61,6 @@ public class Product implements Parcelable {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -75,7 +68,6 @@ public class Product implements Parcelable {
     public String getSeller() {
         return seller;
     }
-
     public void setSeller(String seller) {
         this.seller = seller;
     }
@@ -83,17 +75,25 @@ public class Product implements Parcelable {
     public float getPrice() {
         return price;
     }
-
     public void setPrice(float price) {
         this.price = price;
     }
 
+    public int getPicture() {
+        return picture;
+    }
+    public void setPicture(int picture) {
+        this.picture = picture;
+    }
+
+
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(category);
+
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(seller);
         dest.writeFloat(price);
+        dest.writeInt(picture);
     }
 }

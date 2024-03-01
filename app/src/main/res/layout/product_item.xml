@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="450dp"
     android:layout_margin="25dp"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="15dp"
-    android:paddingTop="25dp">
-
-    <TextView
-        android:id="@+id/category_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/name_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/description_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/seller_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/priceTextView"
+        android:id="@+id/price_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:layout_marginBottom="18dp"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/product_picture"
+        android:layout_width="match_parent"
+        android:layout_height="282dp"
+        android:layout_marginBottom="18dp"
+        android:contentDescription="@string/product_image"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -1,8 +1,10 @@
 package com.example.sqlite.adapter;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sqlite.model.Product;
 import com.example.sqlite.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-
-    private final List<Product> products;
-
+    public List<Product> products;
     public ProductAdapter(List<Product> products) {
         this.products = products;
     }
@@ -33,11 +35,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Product product = products.get(position);
 
-        holder.categoryTextView.setText(product.getCategory());
         holder.nameTextView.setText(product.getName());
         holder.descriptionTextView.setText(product.getDescription());
         holder.sellerTextView.setText(product.getSeller());
-        holder.priceTextView.setText((int) product.getPrice());
+        holder.priceTextView.setText(String.valueOf(product.getPrice()));
+        holder.pictureImageView.setImageURI(Uri.parse(String.valueOf(product.getPicture())));
     }
 
     @Override
@@ -46,16 +48,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView categoryTextView, nameTextView, descriptionTextView, sellerTextView, priceTextView;
+        public TextView nameTextView, descriptionTextView, sellerTextView, priceTextView;
+        public ImageView pictureImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            categoryTextView = itemView.findViewById(R.id.category_textview);
+
             nameTextView = itemView.findViewById(R.id.name_textview);
             descriptionTextView = itemView.findViewById(R.id.description_textview);
             sellerTextView = itemView.findViewById(R.id.seller_textview);
-            priceTextView = itemView.findViewById(R.id.priceTextView);
+            priceTextView = (itemView).findViewById(R.id.price_textview);
+            pictureImageView = itemView.findViewById(R.id.product_picture);
         }
     }
 }

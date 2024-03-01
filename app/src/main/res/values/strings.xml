@@ -15,4 +15,7 @@
     <string name="text_products_by_category">Products by Category</string>
     <string name="button_visualize_by_category">Visualize by Category</string>
     <string name="add_new_product">Add New Product</string>
+    <string name="send_email">Send Email</string>
+    <string name="view_image">View Image</string>
+    <string name="product_image">Product Image</string>
 </resources>

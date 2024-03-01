@@ -27,12 +27,12 @@
         android:background="?android:attr/listDivider" />
 
     <ImageView
-        android:id="@+id/image_view_movie"
+        android:id="@+id/product_picture"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:contentDescription="@string/product_picture"
-        android:src="@mipmap/ic_battery" />
+        android:contentDescription="@string/view_image"
+        android:src="@mipmap/ic_launcher" />
 
     <View
         android:id="@+id/divider2"
@@ -43,18 +43,18 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/text_view_all_movies"
+        android:id="@+id/text_view_all_products"
         android:text="@string/text_all_products"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_all_products"
         android:text="@string/button_visualize_full_list"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -66,33 +66,6 @@
         android:layout_marginLeft="10dp"
         android:background="?android:attr/listDivider" />
 
-    <TextView
-        android:id="@+id/text_view_movie_by_category"
-        android:text="@string/text_products_by_category"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Spinner
-        android:id="@+id/spinner_movie_category"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="40dp"
-
-        android:entries="@array/product_categories"
-        android:prompt="@string/product_category_prompt"
-        android:spinnerMode="dropdown" />
-
-    <Button
-        android:id="@+id/btn_category_products"
-        android:text="@string/button_visualize_by_category"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/divider4"
         android:layout_width="match_parent"
@@ -100,12 +73,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:background="?android:attr/listDivider" />
-
-    <Button
-        android:id="@+id/btn_send_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 
 
 </LinearLayout>
