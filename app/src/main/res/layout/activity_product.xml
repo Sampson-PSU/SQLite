@@ -28,7 +28,7 @@
         tools:listitem="@layout/product_item" />
 
     <LinearLayout
-        android:id="@+id/layout_horizontal"
+        android:id="@+id/layout_vertical"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:gravity="center"

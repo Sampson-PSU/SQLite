@@ -16,7 +16,6 @@ import com.example.sqlite.R;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     public List<Product> products;

@@ -30,7 +30,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnBackSelection;
     private Button sendEmailButton;
     private String option_selected;
-    //private ImageView productPicture;
+    List<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,6 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
         // Create an Instance of the ProductDatabaseHelper to manipulate the database.
         databaseHelper = new ProductDatabaseHelper(this);
-
-        List<Product> products;
 
         //Create an intent to recover the String passed as a parameter in the previous activity.
         Intent intent = getIntent();
@@ -88,7 +86,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
             goBackToPreviousActivity();
         } else if (id == R.id.send_email_button) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-            emailIntent.setData(Uri.parse("mailto:scrooksjr@gmail.com"));
+            emailIntent.setData(Uri.parse("mailto:sweng888mobileapps@gmail.com"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Selected Products");
 
             StringBuilder databaseOutput = new StringBuilder("Here are the selected products: " + "\n\n");
@@ -110,7 +108,10 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
         if (requestCode == 123) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(getBaseContext(),"It works.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"Email Successfully Sent!", Toast.LENGTH_SHORT).show();
+                // Remove products at the specified position.
+                products.clear();
+                productAdapter.notifyDataSetChanged();
             }
         }
     }

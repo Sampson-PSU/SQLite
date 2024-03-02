@@ -19,18 +19,28 @@
         tools:listitem="@layout/product_item" />
 
     <LinearLayout
-        android:id="@+id/layout_horizontal"
+        android:id="@+id/layout_vertical"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="156dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_selected_products"
+            android:layout_width="260dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:elevation="15dp"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/get_selected_products" />
 
         <Button
             android:id="@+id/btn_all_products"
             android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:elevation="20dp"
+            android:layout_height="48dp"
+            android:layout_margin="10dp"
+            android:elevation="15dp"
             android:gravity="center"
             android:text="@string/get_all_products" />
 
