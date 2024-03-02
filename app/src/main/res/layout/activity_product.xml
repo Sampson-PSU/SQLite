@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.ProductActivity">
 
     <Button
         android:id="@+id/send_email_button"
-        android:layout_width="match_parent"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="50dp"
@@ -19,7 +20,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="540dp"
+        android:layout_height="612dp"
         android:layout_marginBottom="10dp"
         android:elevation="0dp"
         android:orientation="vertical"
@@ -30,28 +31,17 @@
         android:id="@+id/layout_horizontal"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_back_selection"
+            android:id="@+id/btn_all_products"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:elevation="20dp"
             android:gravity="center"
             android:text="@string/back_to_selection_activity" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/floating_button_add"
-            android:elevation="16dp"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher"
-            android:visibility="visible" />
 
     </LinearLayout>
 

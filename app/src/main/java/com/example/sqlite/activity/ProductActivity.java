@@ -1,22 +1,15 @@
 package com.example.sqlite.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.sqlite.R;
 import com.example.sqlite.model.Product;
@@ -24,13 +17,11 @@ import com.example.sqlite.adapter.ProductAdapter;
 import com.example.sqlite.adapter.SpacingItemDecorator;
 
 import com.example.sqlite.database.ProductDatabaseHelper;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
+import java.text.NumberFormat;
 import java.util.List;
-import java.util.PrimitiveIterator;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -38,23 +29,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProductAdapter productAdapter;
     private Button btnBackSelection;
     private Button sendEmailButton;
-    private FloatingActionButton floatingActionBtn;
     private String option_selected;
-    private ImageView productPicture;
-    private String productInformation;
+    //private ImageView productPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_product);
 
         // Instantiate the UI elements.
         recyclerView = findViewById(R.id.recycler_view);
-        floatingActionBtn = findViewById(R.id.floating_action_btn);
-        btnBackSelection = findViewById(R.id.btn_back_selection);
+
+        btnBackSelection = findViewById(R.id.btn_all_products);
         sendEmailButton = findViewById(R.id.send_email_button);
 
-        floatingActionBtn.setOnClickListener(this);
         btnBackSelection.setOnClickListener(this);
         sendEmailButton.setOnClickListener(this);
 
@@ -95,46 +83,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.floating_action_btn) {
-        } else if (id == R.id.btn_back_selection) {
+        //if (id == R.id.floating_action_btn) {
+        if (id == R.id.btn_all_products) {
             goBackToPreviousActivity();
         } else if (id == R.id.send_email_button) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:scrooksjr@gmail.com"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Selected Products");
-            emailIntent.putExtra(Intent.EXTRA_TEXT, "Here are the selected products:\n" + option_selected);
 
-            //Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            //emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/data/data/com.example.sqlite/databases/products_db")));
-            //startActivity(Intent.createChooser(emailIntent, "Send email"));
+            StringBuilder databaseOutput = new StringBuilder("Here are the selected products: " + "\n\n");
+            List<Product> products = databaseHelper.getAllProducts();
+            for(Product item : products) {
+                databaseOutput.append(item.getName()).append("\n");
+                databaseOutput.append(item.getDescription()).append("\n");
+                databaseOutput.append(item.getSeller()).append("\n");
+                databaseOutput.append(NumberFormat.getCurrencyInstance().format(item.getPrice())).append("\n\n");
+            }
+            emailIntent.putExtra(Intent.EXTRA_TEXT, databaseOutput.toString());
 
-            // Start the email intent
-            startActivity(emailIntent);
+            startActivityIfNeeded(emailIntent, 123);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 123) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getBaseContext(),"It works.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void goBackToPreviousActivity() {
-        Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+        Intent intent = new Intent(ProductActivity.this, SelectionActivity.class);
         startActivity(intent);
     }
-
-    /*private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Project");
-        builder.setMessage("Do you want to add a new project?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MainActivity.this, AddProductActivity.class));
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(MainActivity.this, "The action was cancelled", Toast.LENGTH_SHORT).show();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }*/
 }

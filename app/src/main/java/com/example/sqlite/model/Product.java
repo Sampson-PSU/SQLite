@@ -11,9 +11,9 @@ public class Product implements Parcelable {
     private String description;
     private String seller;
     private float price;
-    private int picture;
+    private String picture;
 
-    public Product(String name, String description, String seller, float price, int picture) {
+    public Product(String name, String description, String seller, float price, String picture) {
 
         this.name = name;
         this.description = description;
@@ -28,7 +28,7 @@ public class Product implements Parcelable {
         description = in.readString();
         seller = in.readString();
         price = in.readFloat();
-        picture = in.readInt();
+        picture = in.readString();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -79,10 +79,10 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public int getPicture() {
+    public String getPicture() {
         return picture;
     }
-    public void setPicture(int picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -94,6 +94,6 @@ public class Product implements Parcelable {
         dest.writeString(description);
         dest.writeString(seller);
         dest.writeFloat(price);
-        dest.writeInt(picture);
+        dest.writeString(picture);
     }
 }

@@ -50,14 +50,14 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_NAME + " TEXT," +
                 COLUMN_DESCRIPTION + " TEXT," +
                 COLUMN_SELLER + " TEXT," +
-                COLUMN_PRICE + " TEXT," +
-                COLUMN_PICTURE + " REAL" +
+                COLUMN_PRICE + " REAL," +
+                COLUMN_PICTURE + " TEXT" +
                 ")";
         return QUERY_CREATE_PRODUCT_TABLE;
     }
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM "+TABLE_PRODUCTS;
+        String selectQuery = "SELECT * FROM " + TABLE_PRODUCTS;
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
 
@@ -69,7 +69,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(2), // DESCRIPTION
                         cursor.getString(3), // SELLER
                         cursor.getFloat(4),  // PRICE
-                        cursor.getInt(5)     // PICTURE
+                        cursor.getString(5)     // PICTURE
                 );
                 productList.add(product);
             } while (cursor.moveToNext());
@@ -114,43 +114,43 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values = new ContentValues();
-        values.put(COLUMN_NAME, "Double bacon Cheeseburger");
+        values.put(COLUMN_NAME, "Double Bacon Cheeseburger");
         values.put(COLUMN_DESCRIPTION, "Cheeseburger with bacon, mayo, lettuce and tomatoes.");
-        values.put(COLUMN_SELLER, "Denny's");
+        values.put(COLUMN_SELLER, "Dan's Diner");
         values.put(COLUMN_PRICE, 9.80);
-        values.put(COLUMN_PICTURE, 1);
+        values.put(COLUMN_PICTURE, "/sdcard/Pictures/1_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
         values = new ContentValues();
-        values.put(COLUMN_NAME, "Name 2");
-        values.put(COLUMN_DESCRIPTION, "Desc 2");
-        values.put(COLUMN_SELLER, "Seller 2");
-        values.put(COLUMN_PRICE, "$1.00");
-        values.put(COLUMN_PICTURE, 2);
+        values.put(COLUMN_NAME, "Onion Rings");
+        values.put(COLUMN_DESCRIPTION, "Beer Battered Onion Rings.");
+        values.put(COLUMN_SELLER, "Ron's Onion Ring Emporium");
+        values.put(COLUMN_PRICE, 12.50);
+        values.put(COLUMN_PICTURE, "/sdcard/Pictures/2_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
         values = new ContentValues();
-        values.put(COLUMN_NAME, "Name 3");
-        values.put(COLUMN_DESCRIPTION, "Desc 3");
-        values.put(COLUMN_SELLER, "Seller 3");
-        values.put(COLUMN_PRICE, "");
-        values.put(COLUMN_PICTURE, 3);
+        values.put(COLUMN_NAME, "Loaded Dog");
+        values.put(COLUMN_DESCRIPTION, "Hog dog with our special house slaw.");
+        values.put(COLUMN_SELLER, "Hot Doggy Dog");
+        values.put(COLUMN_PRICE, 7.99);
+        values.put(COLUMN_PICTURE, "/sdcard/Pictures/3_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
         values = new ContentValues();
-        values.put(COLUMN_NAME, "Name 4");
-        values.put(COLUMN_DESCRIPTION, "Desc 4");
-        values.put(COLUMN_SELLER, "Seller 4");
-        values.put(COLUMN_PRICE, "");
-        values.put(COLUMN_PICTURE, 4);
+        values.put(COLUMN_NAME, "Homemade Tomato Soup");
+        values.put(COLUMN_DESCRIPTION, "Creamy tomato, garlic and basil soup.");
+        values.put(COLUMN_SELLER, "The Tomato Tomatoe Shop");
+        values.put(COLUMN_PRICE, 8.25);
+        values.put(COLUMN_PICTURE, "/sdcard/Pictures/4_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
         values = new ContentValues();
-        values.put(COLUMN_NAME, "Name 5");
-        values.put(COLUMN_DESCRIPTION, "Desc 5");
-        values.put(COLUMN_SELLER, "Seller 5");
-        values.put(COLUMN_PRICE, "");
-        values.put(COLUMN_PICTURE, 5);
+        values.put(COLUMN_NAME, "Belgium Waffles");
+        values.put(COLUMN_DESCRIPTION, "Sweet and savory waffles with a hint of vanilla.");
+        values.put(COLUMN_SELLER, "Waffles R' Us");
+        values.put(COLUMN_PRICE, 12.00);
+        values.put(COLUMN_PICTURE, "/sdcard/Pictures/5_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
         database.close();

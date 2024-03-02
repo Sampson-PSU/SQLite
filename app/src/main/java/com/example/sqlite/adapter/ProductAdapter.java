@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sqlite.model.Product;
 import com.example.sqlite.R;
 
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -38,8 +39,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.nameTextView.setText(product.getName());
         holder.descriptionTextView.setText(product.getDescription());
         holder.sellerTextView.setText(product.getSeller());
-        holder.priceTextView.setText(String.valueOf(product.getPrice()));
-        holder.pictureImageView.setImageURI(Uri.parse(String.valueOf(product.getPicture())));
+        holder.priceTextView.setText(NumberFormat.getCurrencyInstance().format(product.getPrice()));
+        holder.pictureImageView.setImageURI(Uri.fromFile(new File(product.getPicture())));
     }
 
     @Override
