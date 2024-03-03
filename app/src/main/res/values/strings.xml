@@ -20,4 +20,5 @@
     <string name="product_image">Product Image</string>
     <string name="get_all_products">Get All Products</string>
     <string name="get_selected_products">Get Selected Products</string>
+    <string name="open_email">Open Email</string>
 </resources>

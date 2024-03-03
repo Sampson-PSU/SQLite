@@ -1,5 +1,6 @@
 package com.example.sqlite.activity;
 
+// Import all necessary libraries and custom classes.
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,28 +18,31 @@ import com.example.sqlite.model.Product;
 
 import java.util.List;
 
+// Displays a list of product options and handles user interaction.
 public class SelectionActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String PRODUCT_OPTION;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    public ProductDatabaseHelper databaseHelper;
-    private ProductAdapter productAdapter;
+    private String PRODUCT_OPTION; // Stores the selected product option.
+    private RecyclerView recyclerView; // Displays a list of product options.
+    private LinearLayoutManager layoutManager; // Manages the layout of RecyclerView items.
+    public ProductDatabaseHelper databaseHelper; // Provides database operations.
+    private ProductAdapter productAdapter; // Handles product data binding.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        // Instantiate the UI elements.
+        // Initialize the UI elements.
         recyclerView = findViewById(R.id.selection_recycler_view);
-
         Button btnAllProducts = findViewById(R.id.btn_all_products);
+
+        // Set click listener for the "All Products" button.
         btnAllProducts.setOnClickListener(this);
 
         // Create an Instance of the ProductDatabaseHelper to manipulate the database.
         databaseHelper = new ProductDatabaseHelper(this);
 
+        // Retrieve the list of products from the database.
         List<Product> products;
 
         products = databaseHelper.getAllProducts();
@@ -60,7 +64,6 @@ public class SelectionActivity extends AppCompatActivity implements View.OnClick
 
         if (v.getId() == R.id.btn_all_products) {
             PRODUCT_OPTION = "all";
-
         }
         if (PRODUCT_OPTION.equals(("all"))) {
             Intent intent = new Intent(SelectionActivity.this, ProductActivity.class);

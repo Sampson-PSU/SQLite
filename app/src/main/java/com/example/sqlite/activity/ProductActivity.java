@@ -1,5 +1,6 @@
 package com.example.sqlite.activity;
 
+// Import all necessary libraries and custom classes.
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,37 +22,42 @@ import com.example.sqlite.database.ProductDatabaseHelper;
 import java.text.NumberFormat;
 import java.util.List;
 
+/**
+ * Displays a list of products using a RecyclerView.
+ * Handles user interaction and database operations.
+ */
 public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    public ProductDatabaseHelper databaseHelper;
-    private ProductAdapter productAdapter;
-    private Button btnBackSelection;
-    private Button sendEmailButton;
-    private String option_selected;
-    List<Product> products;
+    private RecyclerView recyclerView; // Displays the list of products.
+    private LinearLayoutManager layoutManager;// Manages layout of RecyclerView items.
+    public ProductDatabaseHelper databaseHelper; // Provides database operations.
+    private ProductAdapter productAdapter; // Handles product data binding.
+    private Button btnBackSelection; // Button to navigate back.
+    private Button openEmailButton; // Button to open email.
+    private String option_selected; // Stores the selected option.
+    List<Product> products; // List of products retrieved from database.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        // Instantiate the UI elements.
+        // Initialize the UI elements.
         recyclerView = findViewById(R.id.recycler_view);
 
         btnBackSelection = findViewById(R.id.btn_all_products);
-        sendEmailButton = findViewById(R.id.send_email_button);
+        openEmailButton = findViewById(R.id.open_email_button);
 
+        // Set click listener.
         btnBackSelection.setOnClickListener(this);
-        sendEmailButton.setOnClickListener(this);
+        openEmailButton.setOnClickListener(this);
 
         // Create an Instance of the ProductDatabaseHelper to manipulate the database.
         databaseHelper = new ProductDatabaseHelper(this);
 
         //Create an intent to recover the String passed as a parameter in the previous activity.
         Intent intent = getIntent();
-        option_selected = (String) intent.getStringExtra("option_selected");
+        option_selected = intent.getStringExtra("option_selected");
 
         // Check if the database is empty.
         // If empty, populate and get All products.
@@ -81,10 +87,9 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        //if (id == R.id.floating_action_btn) {
         if (id == R.id.btn_all_products) {
             goBackToPreviousActivity();
-        } else if (id == R.id.send_email_button) {
+        } else if (id == R.id.open_email_button) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:sweng888mobileapps@gmail.com"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Selected Products");
@@ -102,20 +107,25 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
             startActivityIfNeeded(emailIntent, 123);
         }
     }
+
+    // Handles the result of an activity (email Sending).
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 123) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(getBaseContext(),"Email Successfully Sent!", Toast.LENGTH_SHORT).show();
-                // Remove products at the specified position.
+                Toast.makeText(getBaseContext(), "Email Successfully Sent!", Toast.LENGTH_SHORT).show();
+                // Clear the list of products at the specified position.
                 products.clear();
-                productAdapter.notifyDataSetChanged();
+
+                // Notify the adapter that the data has changed.
+                productAdapter.notifyItemRangeRemoved(0,products.size());
             }
         }
     }
 
+    // Navigate back to the previous activity (SelectionActivity).
     private void goBackToPreviousActivity() {
         Intent intent = new Intent(ProductActivity.this, SelectionActivity.class);
         startActivity(intent);

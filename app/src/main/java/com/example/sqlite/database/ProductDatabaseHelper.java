@@ -1,21 +1,21 @@
 package com.example.sqlite.database;
 
+// Import all necessary libraries and custom classes.
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.example.sqlite.model.Product;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages SQLite database for storing product information.
+ */
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
-
     private static final String DATABASE_NAME = "products_db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_PRODUCTS = "products";
@@ -26,6 +26,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     public static final String  COLUMN_PRICE = "price";
     public static final String COLUMN_PICTURE = "picture";
 
+    // Constructs a ProductDatabaseHelper instance.
     public ProductDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -37,13 +38,11 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if(oldVersion < 2) {
-            /** Update the database to version 2.
-             *  You may need to create new columns or add new tables to the database.
-             */
+            // Handles database schema changes for version 2 or higher.
         }
     }
 
-    // Query to create the database.
+    // Query to create the products table in the database.
     private String createProductsTable(){
         String QUERY_CREATE_PRODUCT_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY, "+
@@ -55,6 +54,8 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
                 ")";
         return QUERY_CREATE_PRODUCT_TABLE;
     }
+
+    // Retrieves a list of all products from the database.
     public List<Product> getAllProducts() {
         List<Product> productList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_PRODUCTS;
@@ -80,6 +81,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return productList;
     }
 
+    // Checks if the database is empty.
     public boolean isDatabaseEmpty() {
         boolean isEmpty = true;
         SQLiteDatabase database = getWritableDatabase();
@@ -95,24 +97,15 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return isEmpty;
     }
 
-    // Convert from bitmap to byte array.
-    public static byte[] getBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-        return stream.toByteArray();
-    }
-
-    // convert from byte array to bitmap
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
-    }
-
+    // Populates the products database with the initial data.
     public void populateProductsDatabase(){
 
         SQLiteDatabase database = getWritableDatabase();
 
-        ContentValues values = new ContentValues();
+        // Create ContentValues to hold product data.
+        ContentValues values;
 
+        // Insert first product.
         values = new ContentValues();
         values.put(COLUMN_NAME, "Double Bacon Cheeseburger");
         values.put(COLUMN_DESCRIPTION, "Cheeseburger with bacon, mayo, lettuce and tomatoes.");
@@ -121,6 +114,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, "/sdcard/Pictures/1_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
+        // Insert second product.
         values = new ContentValues();
         values.put(COLUMN_NAME, "Onion Rings");
         values.put(COLUMN_DESCRIPTION, "Beer Battered Onion Rings.");
@@ -129,6 +123,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, "/sdcard/Pictures/2_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
+        // Insert third product.
         values = new ContentValues();
         values.put(COLUMN_NAME, "Loaded Dog");
         values.put(COLUMN_DESCRIPTION, "Hog dog with our special house slaw.");
@@ -137,6 +132,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, "/sdcard/Pictures/3_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
+        // Insert fourth product.
         values = new ContentValues();
         values.put(COLUMN_NAME, "Homemade Tomato Soup");
         values.put(COLUMN_DESCRIPTION, "Creamy tomato, garlic and basil soup.");
@@ -145,6 +141,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, "/sdcard/Pictures/4_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
+        // Insert fifth product.
         values = new ContentValues();
         values.put(COLUMN_NAME, "Belgium Waffles");
         values.put(COLUMN_DESCRIPTION, "Sweet and savory waffles with a hint of vanilla.");
@@ -153,6 +150,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, "/sdcard/Pictures/5_product_picture.jpg");
         database.insert(TABLE_PRODUCTS, null, values);
 
+        // Close database connection.
         database.close();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.sqlite.adapter;
 
+// Import all necessary libraries and custom classes.
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +18,14 @@ import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
 
+// Adapter for displaying product items in a RecyclerView.
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-    public List<Product> products;
+    public List<Product> products; // List of products to display.
+
+    /**
+     * Constructs a ProductAdapter with the given list of products.
+     * @param products List of Products to display.
+     */
     public ProductAdapter(List<Product> products) {
         this.products = products;
     }
@@ -26,6 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // Inflate the product item layout and create a ViewHolder.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item,
                 parent, false);
         return new ViewHolder(view);
@@ -33,6 +41,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        // Bind product data to the ViewHolder.
         Product product = products.get(position);
 
         holder.nameTextView.setText(product.getName());
@@ -54,6 +64,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
 
+            // Initialize UI elements within the ViewHolder.
             nameTextView = itemView.findViewById(R.id.name_textview);
             descriptionTextView = itemView.findViewById(R.id.description_textview);
             sellerTextView = itemView.findViewById(R.id.seller_textview);

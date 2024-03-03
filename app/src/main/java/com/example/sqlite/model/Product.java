@@ -1,5 +1,6 @@
 package com.example.sqlite.model;
 
+// Import all necessary libraries.
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,12 +8,13 @@ import androidx.annotation.NonNull;
 
 public class Product implements Parcelable {
 
-    private String name;
-    private String description;
-    private String seller;
-    private float price;
-    private String picture;
+    private String name; // Name of the product.
+    private String description; // Description of the product.
+    private String seller; // Seller of the product.
+    private float price; // Price of the product.
+    private String picture; // File path or URI to the product picture.
 
+    // Construct a product instance.
     public Product(String name, String description, String seller, float price, String picture) {
 
         this.name = name;
@@ -43,14 +45,13 @@ public class Product implements Parcelable {
         }
     };
 
-    // Describe Content.
+    // Describes the content of the Parcelable.
     @Override
     public int describeContents() {
         return 0;
     }
 
     // Getter and Setters.
-
     public String getName() {
         return name;
     }
@@ -86,7 +87,7 @@ public class Product implements Parcelable {
         this.picture = picture;
     }
 
-
+    // Writes the attributes to a parcel.
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
 
