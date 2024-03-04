@@ -1,14 +1,15 @@
 package com.example.sqlite.activity;
 
 // Import all necessary libraries and custom classes.
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sqlite.R;
 import com.example.sqlite.adapter.ProductAdapter;
@@ -16,16 +17,18 @@ import com.example.sqlite.adapter.SpacingItemDecorator;
 import com.example.sqlite.database.ProductDatabaseHelper;
 import com.example.sqlite.model.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Displays a list of product options and handles user interaction.
-public class SelectionActivity extends AppCompatActivity implements View.OnClickListener {
+public class SelectionActivity extends AppCompatActivity {
 
     private String PRODUCT_OPTION; // Stores the selected product option.
     private RecyclerView recyclerView; // Displays a list of product options.
     private LinearLayoutManager layoutManager; // Manages the layout of RecyclerView items.
     public ProductDatabaseHelper databaseHelper; // Provides database operations.
     private ProductAdapter productAdapter; // Handles product data binding.
+    private Button btnSelectedProducts; // Handles product data binding.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +38,7 @@ public class SelectionActivity extends AppCompatActivity implements View.OnClick
         // Initialize the UI elements.
         recyclerView = findViewById(R.id.selection_recycler_view);
         Button btnAllProducts = findViewById(R.id.btn_all_products);
-
-        // Set click listener for the "All Products" button.
-        btnAllProducts.setOnClickListener(this);
+        btnSelectedProducts = findViewById(R.id.btn_selected_products);
 
         // Create an Instance of the ProductDatabaseHelper to manipulate the database.
         databaseHelper = new ProductDatabaseHelper(this);
@@ -57,19 +58,37 @@ public class SelectionActivity extends AppCompatActivity implements View.OnClick
         layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-    }
 
-    @Override
-    public void onClick(View v) {
+        btnSelectedProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.btn_selected_products) {
+                    // Get selected products from the adapter.
+                    List<Product> selections = productAdapter.getSelections();
+                    // If there are selected products, create intent to launch the ProductActivity.
+                    if (!selections.isEmpty()) {
+                        Intent selectionIntent = new Intent(SelectionActivity.this, ProductActivity.class);
+                        String KEY_OPTION_SELECTIONS = "option_selections";
+                        selectionIntent.putExtra(KEY_OPTION_SELECTIONS, new ArrayList<>(selections));
+                        startActivity(selectionIntent);
+                    }
+                }
 
-        if (v.getId() == R.id.btn_all_products) {
-            PRODUCT_OPTION = "all";
-        }
-        if (PRODUCT_OPTION.equals(("all"))) {
-            Intent intent = new Intent(SelectionActivity.this, ProductActivity.class);
-            String KEY_OPTION_SELECTED = "option_selected";
-            intent.putExtra(KEY_OPTION_SELECTED, PRODUCT_OPTION);
-            startActivity(intent);
-        }
+                btnAllProducts.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (v.getId() == R.id.btn_all_products) {
+                            PRODUCT_OPTION = "all";
+                        }
+                        if (PRODUCT_OPTION.equals(("all"))) {
+                            Intent intent = new Intent(SelectionActivity.this, ProductActivity.class);
+                            String KEY_OPTION_SELECTED = "option_selected";
+                            intent.putExtra(KEY_OPTION_SELECTED, PRODUCT_OPTION);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+        });
     }
 }

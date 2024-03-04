@@ -1,9 +1,6 @@
 package com.example.sqlite.activity;
 
 // Import all necessary libraries and custom classes.
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,12 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.sqlite.R;
-import com.example.sqlite.model.Product;
 import com.example.sqlite.adapter.ProductAdapter;
 import com.example.sqlite.adapter.SpacingItemDecorator;
-
 import com.example.sqlite.database.ProductDatabaseHelper;
+import com.example.sqlite.model.Product;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -36,6 +36,7 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
     private Button openEmailButton; // Button to open email.
     private String option_selected; // Stores the selected option.
     List<Product> products; // List of products retrieved from database.
+    List<Product> selections; // List of selected products.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
 
         //Create an intent to recover the String passed as a parameter in the previous activity.
         Intent intent = getIntent();
-        option_selected = intent.getStringExtra("option_selected");
+
+        selections = intent.getParcelableArrayListExtra("option_selections");
 
         // Check if the database is empty.
         // If empty, populate and get All products.
@@ -65,15 +67,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
             databaseHelper.populateProductsDatabase();
         }
 
-        // Option is equal to "all" then get all products.
-        if (option_selected.equals("all")) {
-            products = databaseHelper.getAllProducts();
-        } else {
-            return;
-        }
-
         // Configure the adapter and assign a product to the RecyclerView.
-        productAdapter = new ProductAdapter(products);
+        productAdapter = new ProductAdapter(selections);
         recyclerView.setAdapter(productAdapter);
         recyclerView.addItemDecoration(new SpacingItemDecorator(0));
 
@@ -95,8 +90,8 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Selected Products");
 
             StringBuilder databaseOutput = new StringBuilder("Here are the selected products: " + "\n\n");
-            List<Product> products = databaseHelper.getAllProducts();
-            for(Product item : products) {
+
+            for(Product item : selections) {
                 databaseOutput.append(item.getName()).append("\n");
                 databaseOutput.append(item.getDescription()).append("\n");
                 databaseOutput.append(item.getSeller()).append("\n");
@@ -116,11 +111,12 @@ public class ProductActivity extends AppCompatActivity implements View.OnClickLi
         if (requestCode == 123) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(getBaseContext(), "Email Successfully Sent!", Toast.LENGTH_SHORT).show();
+                int size = selections.size();
                 // Clear the list of products at the specified position.
-                products.clear();
+                selections.clear();
 
                 // Notify the adapter that the data has changed.
-                productAdapter.notifyItemRangeRemoved(0,products.size());
+                productAdapter.notifyItemRangeRemoved(0,selections.size());
             }
         }
     }
